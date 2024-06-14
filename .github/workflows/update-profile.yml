@@ -1,0 +1,39 @@
+name: Update Profile README
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # This runs the workflow daily
+  push:
+    branches:
+      - main  # Adjust the branch name as per your default branch
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Generate Dynamic Content
+        run: |
+          echo "### Latest Projects" > README.md
+          echo "" >> README.md
+          echo "- [Doodle-to-Clothing](https://github.com/Fahim043/Thesis-Doodle-to-search)" >> README.md
+          echo "- [Lungs Disease Detection](https://github.com/Fahim043/Lungs-Disease-detection)" >> README.md
+          echo "- [ML Project on Diabetes Dataset](https://github.com/Fahim043/ML_project)" >> README.md
+          echo "- [Ham or Spam Detection](https://github.com/Fahim043/Ham-or-Spam-Detection)" >> README.md
+          echo "- [Airline Passengers Forecasting](https://github.com/Fahim043/Airline-Passenger-Forecasting)" >> README.md
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Update README with latest projects"
+          git push
